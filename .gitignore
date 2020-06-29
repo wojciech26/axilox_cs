@@ -2,3 +2,11 @@
 Axilox/.vs/Axilox/v16/Server/sqlite3/storage.ide
 Axilox/.vs/Axilox/v16/Server/sqlite3/db.lock
 Axilox/.vs/Axilox/v16/.suo
+Axilox/.vs/Axilox/v16/Server/sqlite3/storage.ide-wal
+*.ide-wal
+Axilox/obj/Debug/netcoreapp3.1/Axilox.csproj.FileListAbsolute.txt
+*.ide-wal
+Axilox/.vs/Axilox/v16/Server/sqlite3/storage.ide-wal
+Axilox/bin/Debug/netcoreapp3.1/Axilox.deps.json
+Axilox/bin/Debug/netcoreapp3.1/Axilox.dll
+*.pdb
