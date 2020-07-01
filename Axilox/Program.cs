@@ -11,6 +11,13 @@ namespace Axilox
             int[,] gameBoard = new int[9, 9];
             string myDirection = "h";
             string compDirection = "v";
+            int myPoints = 0;
+            int compPoints = 0;
+            int round = 1;
+            int oldNumber = 1;
+            int compChoice = 0;
+
+
             //board.boardGeneration(gameBoard);
 
             PrintMenu();
@@ -41,17 +48,15 @@ namespace Axilox
                         compDirection = "v";
                     }
 
-                board.boardGeneration(gameBoard);
-                break;
+                    board.boardGeneration(gameBoard);
+                    //move mymove = new move();
+                    //move enemymove = new move();
+                    break;
 
             }
 
 
-            int myPoints = 0;
-            int compPoints = 0;
-            int round = 1;
-            int oldNumber = 0;
-            int newNumber = 0;
+
 
             do
             {
@@ -63,114 +68,47 @@ namespace Axilox
 
                     move mymove = new move();
 
-
-                    mymove.MyMove(oldNumber, newNumber, myDirection);
-
-
-                    //int action2 = int.Parse(Console.ReadLine());
-                    //switch (action2)
-                    //{
-                    //    case 0:
-                    //        Console.WriteLine("Shutting down ...");
-                    //        Environment.Exit(0);
-                    //        break;
-                    //    case 1:
-                    //    case 2:
-                    //    case 3:
-                    //    case 4:
-                    //    case 5:
-                    //    case 6:
-                    //    case 7:
-                    //    case 8:
+                    mymove.MyMove(oldNumber, myDirection, gameBoard);
+                   
 
 
 
-                    //        Console.WriteLine("1");
-                    //        break;
-
-                    //}
-
-                    round++;
+                    
                     Console.WriteLine("koniec rundy: ", round);
-
+                    round++;
                 }
                 else
                 {
+                    board.ShowBoard(gameBoard);
+                    move computermove = new move();
 
+                    
+                    Console.Write("computer chooses: " );
+
+                    computermove.CompMove(oldNumber, compDirection, gameBoard, compChoice);
+                    System.Threading.Thread.Sleep(5000);
+
+                    Console.WriteLine("koniec rundy: ", round);
+                    round++;
+                    System.Threading.Thread.Sleep(5000);
                 }
+
             } 
             while (true);
             
-
-
         }
 
 
 
-
-        //public static int[,] boardGeneration(int[,] board)
-        //{
-        //    Random rnd = new Random();
-        //    int[,] gameBoard = board;
+        
 
 
-        //    for (int i = 0; i < 1; i++)
-        //    {
-        //        for (int j = 0; j < 9; j++)
-        //        {
-        //            gameBoard[i, j] = j;
-        //        }
-        //    }
-
-        //    for (int j = 0; j < 1; j++)
-        //    {
-        //        for (int i = 0; i < 9; i++)
-        //        {
-        //            gameBoard[i, j] = i;
-        //        }
-        //    }
 
 
-        //    for (int i = 1; i < 9; i++)
-        //    {
-        //        for (int j = 1; j < 9; j++)
-        //        {
-        //            gameBoard[i, j] = rnd.Next(1, 9);
-        //            //Console.Write(" {0} ", gameBoard[i, j]);
-        //        }
-        //        //Console.WriteLine();
-        //    }
 
-        //    return gameBoard;
-        //}
+        //MENU
 
-        //public static void ShowBoard(int[,] board)
-        //{
-        //    int[,] gameBoard = board;
-
-        //    for (int i = 0; i < 9; i++)
-        //    {
-        //        for (int j = 0; j < 9; j++)
-        //        {
-        //            if (i == 0 || j == 0) { Console.ForegroundColor = ConsoleColor.Green; }
-        //            else
-        //            {
-        //                Console.ResetColor();
-        //            }
-        //            if(gameBoard[i,j] == 0)
-        //            {
-        //                Console.ForegroundColor = ConsoleColor.Black;
-        //            }
-        //            else
-        //            {
-        //                Console.ResetColor();
-        //            }
-
-        //            Console.Write(" {0} ", gameBoard[i, j]);
-        //        }
-        //        Console.WriteLine();
-        //    }
-        //}
+       
         private static void PrintMenu()
         {
             Console.WriteLine("Avaible options: ");
