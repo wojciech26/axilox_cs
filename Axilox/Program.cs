@@ -7,15 +7,24 @@ namespace Axilox
     {
         static void Main(string[] args)
         {
-            //myMove move = new myMove();
+
+            move mymove = new move();
+            move computermove = new move();
+            
             int[,] gameBoard = new int[9, 9];
             string myDirection = "h";
             string compDirection = "v";
-            int myPoints = 0;
-            int compPoints = 0;
+            //int myPoints = 0;
+            //int compPoints = 0;
             int round = 1;
-            int oldNumber = 1;
-            int compChoice = 0;
+            //int oldNumber = 1;
+            //int compChoice = 0;
+            mymove.OldNumber = 1;
+            mymove.MyPoints = 0;
+
+            computermove.CompChoice = 1;
+            computermove.OldNumber = 1;
+            computermove.CompPoints = 0;
 
 
             //board.boardGeneration(gameBoard);
@@ -62,35 +71,38 @@ namespace Axilox
             {
                 if (round % 2 == 1)
                 {
-
+                    Console.Clear();
                     board.ShowBoard(gameBoard);
                     PrintGameMenu(myDirection);
 
-                    move mymove = new move();
+                    
 
-                    mymove.MyMove(oldNumber, myDirection, gameBoard);
+                    mymove.MyMove(myDirection, gameBoard);
                    
 
 
 
                     
                     Console.WriteLine("koniec rundy: ", round);
+                    Console.WriteLine("{0}", mymove.OldNumber);
                     round++;
                 }
                 else
                 {
+                    Console.Clear();
                     board.ShowBoard(gameBoard);
-                    move computermove = new move();
 
-                    
+
+                    System.Threading.Thread.Sleep(2000);
                     Console.Write("computer chooses: " );
 
-                    computermove.CompMove(oldNumber, compDirection, gameBoard, compChoice);
+                    computermove.CompMove(compDirection, gameBoard);
                     System.Threading.Thread.Sleep(5000);
 
                     Console.WriteLine("koniec rundy: ", round);
+                    Console.WriteLine("{0}", computermove.OldNumber);
                     round++;
-                    System.Threading.Thread.Sleep(5000);
+                    System.Threading.Thread.Sleep(3000);
                 }
 
             } 

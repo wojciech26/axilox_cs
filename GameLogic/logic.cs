@@ -76,6 +76,12 @@ namespace GameLogic
 
 
     }
+
+
+
+
+
+
     public class move
     {
 
@@ -85,15 +91,13 @@ namespace GameLogic
 
         }
 
-        public int MyPoints { get; private set; }
-        public int CompPoints { get; private set; }
+        public int MyPoints { get; set; }
+        public int CompPoints { get; set; }
 
-        private int NewNumber { get; set; }
-        private int OldNumber { get; set; }
+        public int OldNumber { get; set; }
         public int CompChoice { get; set; }
-        public string MyDirection { get; set; }
 
-        public int MyMove(int oldNumber, string myDirection, int[,] board)
+        public int MyMove(string myDirection, int[,] board)
         {
             int myChoice = int.Parse(Console.ReadLine());
 
@@ -118,7 +122,7 @@ namespace GameLogic
 
         }
 
-        public int CompMove(int OldNumber, string CompDirection, int[,] board, int CompChoice)
+        public int CompMove(string CompDirection, int[,] board)
         {
 
 
@@ -126,14 +130,22 @@ namespace GameLogic
             {
                 for (int i = 1; i <= 8; i++)
                 {
-
+                    if (board[i, OldNumber] == 0) { }
+                        else
+                        {
+                            if (board[i, OldNumber] > CompChoice)
+                                CompChoice = board[i, OldNumber];
+                        }
 
 
                     //for (int j = 1; j <= 8; j++)
                     //{
-
-                    //    if (board[i, OldNumber] - board[i, j] > CompChoice)
-                    //        CompChoice = board[i, OldNumber];
+                    //    if (board[i, OldNumber] == 0) { }
+                    //    else
+                    //    {
+                    //        if (board[i, OldNumber] - board[i, j] > CompChoice)
+                    //            CompChoice = board[i, OldNumber];
+                    //    }
                     //}
                 }
 
@@ -151,9 +163,12 @@ namespace GameLogic
                 {
                     for (int i = 1; i <= 8; i++)
                     {
-
-                        if (board[OldNumber, j] - board[i, j] > CompChoice)
-                            CompChoice = board[OldNumber, j];
+                        if (board[OldNumber, j] == 0) { }
+                        else
+                        {
+                            if (board[OldNumber, j] - board[i, j] > CompChoice)
+                                CompChoice = board[OldNumber, j];
+                        }
                     }
                 }
 
@@ -173,8 +188,75 @@ namespace GameLogic
 
 
 
+
+        public int Endcheck(string CompDirection, int[,] board)
+        {
+            if (CompDirection == "h")
+            {
+                for (int i = 1; i <= 8; i++)
+                {
+                    if (board[i, OldNumber] == 0)
+                    {
+
+                        if (MyPoints > CompPoints)
+                        {
+                            Console.WriteLine("you won");
+                        }
+                        else if (MyPoints == CompPoints)
+                        {
+                            Console.WriteLine("remis");
+                        }
+                        else
+                        {
+                            Console.WriteLine("2nd place");
+                        }
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+                return MyPoints;
+            }
+            else
+            {
+                for (int j = 1; j <= 8; j++)
+                {
+                    if (board[OldNumber, j] == 0)
+                    {
+
+                        if (MyPoints > CompPoints)
+                        {
+
+                            Console.WriteLine("you won");
+                            return MyPoints;
+
+                        }
+                        else if (MyPoints == CompPoints)
+                        {
+                            Console.WriteLine("remis");
+                            return MyPoints;
+                        }
+                        else
+                        {
+                            Console.WriteLine("2nd place");
+                            return MyPoints;
+                        }
+
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+
+                }
+                return 0;
+            }
+
+        }
     }
 }
+
 
 
 
