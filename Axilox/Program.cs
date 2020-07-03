@@ -14,20 +14,16 @@ namespace Axilox
             int[,] gameBoard = new int[9, 9];
             string myDirection = "h";
             string compDirection = "v";
-            //int myPoints = 0;
-            //int compPoints = 0;
+            
             int round = 1;
             //int oldNumber = 1;
-            //int compChoice = 0;
+
             mymove.OldNumber = 1;
             mymove.MyPoints = 0;
 
             computermove.CompChoice = 1;
             computermove.OldNumber = 1;
             computermove.CompPoints = 0;
-
-
-            //board.boardGeneration(gameBoard);
 
             PrintMenu();
             int action1 = int.Parse(Console.ReadLine());
@@ -43,7 +39,6 @@ namespace Axilox
                     Environment.Exit(0);
                     break;
                 case 1:
-
                     Console.WriteLine("choose your direction: v-vertical, h-horizontal");
                     myDirection = Console.ReadLine();
 
@@ -56,66 +51,67 @@ namespace Axilox
                         myDirection = "h";
                         compDirection = "v";
                     }
-
                     board.boardGeneration(gameBoard);
-                    //move mymove = new move();
-                    //move enemymove = new move();
                     break;
-
             }
 
-
-
+            //game
 
             do
             {
+                if (computermove.Endcheck1(compDirection, gameBoard) == 0||mymove.Endcheck1(myDirection,gameBoard)==0)
+                {
+                    if (mymove.MyPoints > computermove.CompPoints)
+                    {
+                        Console.WriteLine("you won");
+                    }
+                    else
+                    {
+                        Console.WriteLine("2nd place");
+                    }
+
+                    Console.WriteLine("end of the game. your points: {0}, computer points: {1}", mymove.MyPoints, computermove.CompPoints);
+                    break;
+                }                
+
+
                 if (round % 2 == 1)
                 {
                     Console.Clear();
-                    board.ShowBoard(gameBoard);
-                    PrintGameMenu(myDirection);
-
                     
+                    board.ShowBoard(gameBoard);
+                    Console.WriteLine("computer chosed:{0}", computermove.OldNumber);
+                    PrintGameMenu(myDirection, mymove.OldNumber);
+
+
 
                     mymove.MyMove(myDirection, gameBoard);
                    
 
-
-
-                    
-                    Console.WriteLine("koniec rundy: ", round);
+                    Console.WriteLine("koniec rundy: {0}", round);
                     Console.WriteLine("{0}", mymove.OldNumber);
+                    computermove.OldNumber = mymove.OldNumber;
+                    
                     round++;
                 }
                 else
                 {
                     Console.Clear();
                     board.ShowBoard(gameBoard);
-
-
-                    System.Threading.Thread.Sleep(2000);
+                    
                     Console.Write("computer chooses: " );
+                    System.Threading.Thread.Sleep(2000);
 
                     computermove.CompMove(compDirection, gameBoard);
-                    System.Threading.Thread.Sleep(5000);
 
-                    Console.WriteLine("koniec rundy: ", round);
                     Console.WriteLine("{0}", computermove.OldNumber);
+                    mymove.OldNumber = computermove.OldNumber;
                     round++;
-                    System.Threading.Thread.Sleep(3000);
+                    System.Threading.Thread.Sleep(5000);
                 }
-
             } 
             while (true);
-            
         }
-
-
-
-        
-
-
-
 
 
         //MENU
@@ -130,16 +126,16 @@ namespace Axilox
             Console.Write("Choose action: ");
         }
 
-        private static void PrintGameMenu(string direction)
+        private static void PrintGameMenu(string direction, int oldNumber)
         {
-            Console.WriteLine("Avaible options: ");
+            
             if (direction == "h")
             {
-                Console.WriteLine("1-8 - choose number from row: ");
+                Console.WriteLine("1-8 - choose row from column: {0}", oldNumber);//
             }
             else
             {
-                Console.WriteLine("1-8 - choose number from column: ");
+                Console.WriteLine("1-8 - choose column from row: {0}", oldNumber);//
             }
             // ...
             Console.Write("Choose: ");

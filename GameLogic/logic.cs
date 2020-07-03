@@ -40,9 +40,7 @@ namespace GameLogic
                 for (int j = 1; j < 9; j++)
                 {
                     gameBoard[i, j] = rnd.Next(1, 9);
-                    //Console.Write(" {0} ", gameBoard[i, j]);
                 }
-                //Console.WriteLine();
             }
 
             return gameBoard;
@@ -51,7 +49,7 @@ namespace GameLogic
         public static void ShowBoard(int[,] board)
         {
             int[,] gameBoard = board;
-
+            
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < 9; j++)
@@ -65,16 +63,12 @@ namespace GameLogic
                     {
                         Console.ForegroundColor = ConsoleColor.Black;
                     }
-
-
                     Console.Write(" {0} ", gameBoard[i, j]);
                     Console.ResetColor();
                 }
                 Console.WriteLine();
             }
         }
-
-
     }
 
 
@@ -124,37 +118,32 @@ namespace GameLogic
 
         public int CompMove(string CompDirection, int[,] board)
         {
-
+            int pointChoice = 0;
+            CompChoice = 0;
 
             if (CompDirection == "h")
             {
+                
                 for (int i = 1; i <= 8; i++)
                 {
-                    if (board[i, OldNumber] == 0) { }
-                        else
-                        {
-                            if (board[i, OldNumber] > CompChoice)
-                                CompChoice = board[i, OldNumber];
+
+                    for (int j = 1; j <= 8; j++)
+                    {
+                        if (board[i, OldNumber] != 0) {
+                        
+                            if (board[i, OldNumber] - board[i, j] > pointChoice)
+                            {
+                                pointChoice = board[i, OldNumber];
+                                CompChoice = i;
+                            }
                         }
-
-
-                    //for (int j = 1; j <= 8; j++)
-                    //{
-                    //    if (board[i, OldNumber] == 0) { }
-                    //    else
-                    //    {
-                    //        if (board[i, OldNumber] - board[i, j] > CompChoice)
-                    //            CompChoice = board[i, OldNumber];
-                    //    }
-                    //}
+                    }
                 }
 
                 CompPoints = CompPoints + board[CompChoice, OldNumber];
                 board[CompChoice, OldNumber] = 0;
                 OldNumber = CompChoice;
 
-                Console.WriteLine(CompChoice);
-                Console.WriteLine(CompPoints);
                 return OldNumber;
             }
             else
@@ -163,96 +152,62 @@ namespace GameLogic
                 {
                     for (int i = 1; i <= 8; i++)
                     {
-                        if (board[OldNumber, j] == 0) { }
-                        else
-                        {
+                        if (board[OldNumber, j] != 0) { 
+              
                             if (board[OldNumber, j] - board[i, j] > CompChoice)
-                                CompChoice = board[OldNumber, j];
+                            {
+                                pointChoice = board[OldNumber, j];
+                                CompChoice = j;
+                            }
                         }
                     }
                 }
 
-                CompPoints += board[CompChoice, OldNumber];
-                board[CompChoice, OldNumber] = 0;
+                CompPoints += board[OldNumber, CompChoice];
+                board[OldNumber, CompChoice] = 0;
                 OldNumber = CompChoice;
 
                 Console.WriteLine(CompChoice);
                 return OldNumber;
             }
-
-
-
         }
 
 
-
-
-
-
-        public int Endcheck(string CompDirection, int[,] board)
+        public int Endcheck1(string Direction, int[,] board)
         {
-            if (CompDirection == "h")
+            int flag = 0;
+
+            if (Direction == "h")
             {
                 for (int i = 1; i <= 8; i++)
                 {
-                    if (board[i, OldNumber] == 0)
-                    {
 
-                        if (MyPoints > CompPoints)
-                        {
-                            Console.WriteLine("you won");
-                        }
-                        else if (MyPoints == CompPoints)
-                        {
-                            Console.WriteLine("remis");
-                        }
-                        else
-                        {
-                            Console.WriteLine("2nd place");
-                        }
+                    if (board[i, OldNumber] != 0)
+                    {
+                        flag = 1;
                     }
                     else
                     {
-                        return 0;
+
                     }
                 }
-                return MyPoints;
+                return flag;
             }
             else
             {
                 for (int j = 1; j <= 8; j++)
                 {
-                    if (board[OldNumber, j] == 0)
+                    if (board[OldNumber, j] != 0)
                     {
-
-                        if (MyPoints > CompPoints)
-                        {
-
-                            Console.WriteLine("you won");
-                            return MyPoints;
-
-                        }
-                        else if (MyPoints == CompPoints)
-                        {
-                            Console.WriteLine("remis");
-                            return MyPoints;
-                        }
-                        else
-                        {
-                            Console.WriteLine("2nd place");
-                            return MyPoints;
-                        }
-
+                        flag = 1;
                     }
                     else
                     {
-                        return 0;
+                        
                     }
-
                 }
-                return 0;
+                return flag;
             }
-
         }
     }
 }
