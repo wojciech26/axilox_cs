@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 
 namespace GameLogic
@@ -73,9 +74,6 @@ namespace GameLogic
 
 
 
-
-
-
     public class move
     {
 
@@ -85,35 +83,50 @@ namespace GameLogic
 
         }
 
+
         public int MyPoints { get; set; }
         public int CompPoints { get; set; }
 
         public int OldNumber { get; set; }
         public int CompChoice { get; set; }
 
-        public int MyMove(string myDirection, int[,] board)
+        public bool check { get; set; }
+
+        public void MyMove(string myDirection, int[,] board)
         {
-            int myChoice = int.Parse(Console.ReadLine());
-
-            if (myDirection == "h")
+            check = true;
+            while (check)
             {
-                MyPoints += board[myChoice, OldNumber];
-                board[myChoice, OldNumber] = 0;
-                OldNumber = myChoice;
-
-                return MyPoints;
+                try
+                {
+                    int myChoice = int.Parse(Console.ReadLine());
+                    if (myChoice < 1 || myChoice > 8)
+                    {                       
+                        throw new ArgumentException();                       
+                    }
+                    else
+                    {
+                        if (myDirection == "h")
+                        {
+                            MyPoints += board[myChoice, OldNumber];
+                            board[myChoice, OldNumber] = 0;
+                            OldNumber = myChoice;
+                            check = false;                            
+                        }
+                        else
+                        {
+                            MyPoints += board[OldNumber, myChoice];
+                            board[OldNumber, myChoice] = 0;
+                            OldNumber = myChoice;
+                            check = false;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("error, use a number between 1 and 8");
+                }
             }
-            else
-            {
-                MyPoints += board[OldNumber, myChoice];
-                board[OldNumber, myChoice] = 0;
-                OldNumber = myChoice;
-
-                return MyPoints;
-
-            }
-
-
         }
 
         public int CompMove(string CompDirection, int[,] board)
@@ -162,7 +175,6 @@ namespace GameLogic
                         }
                     }
                 }
-
                 CompPoints += board[OldNumber, CompChoice];
                 board[OldNumber, CompChoice] = 0;
                 OldNumber = CompChoice;
@@ -211,6 +223,8 @@ namespace GameLogic
         }
     }
 }
+
+
 
 
 
